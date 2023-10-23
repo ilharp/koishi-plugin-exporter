@@ -9,13 +9,37 @@
     "dist"
   ],
   "license": "MIT",
-  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ilharp/koishi-plugin-exporter.git"
+  },
+  "scripts": {
+    "build": "atsc -b"
+  },
   "keywords": [
     "chatbot",
     "koishi",
-    "plugin"
+    "plugin",
+    "prometheus",
+    "metrics",
+    "openmetrics"
   ],
+  "devDependencies": {
+    "atsc": "^1.2.2",
+    "koishi": "^4.15.2",
+    "typescript": "^5.2.2"
+  },
   "peerDependencies": {
-    "koishi": "4.15.0"
+    "koishi": "^4.15.2"
+  },
+  "koishi": {
+    "description": {
+      "zh": "Koishi OpenMetrics 导出",
+      "en": "Koishi OpenMetrics Exporter"
+    },
+    "locales": [
+      "zh",
+      "en"
+    ]
   }
 }
