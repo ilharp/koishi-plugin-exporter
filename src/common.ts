@@ -7,11 +7,16 @@ export interface Config {
 
 export const prefix = 'koishi_'
 
-export const metricNames = {
-  events: 'events',
-  commands: 'commands',
-  dau: 'dau',
-} as const
+const metricNamesIntl = ['events', 'commands', 'users', 'dau'] as const
+
+type ObjectFromList<T extends ReadonlyArray<string>> = {
+  [K in T extends ReadonlyArray<infer U> ? U : never]: K
+}
+
+export const metricNames = metricNamesIntl.reduce(
+  (a, c) => ((a[c] = c), a),
+  {},
+) as ObjectFromList<typeof metricNamesIntl>
 
 export function getDate(ctx: Context) {
   const d = new Date(
