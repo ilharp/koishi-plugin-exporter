@@ -10,6 +10,7 @@ import type { Config as ExporterConfig } from './common'
 import { commands } from './metrics/commands'
 import { dau } from './metrics/dau'
 import { events } from './metrics/events'
+import { users } from './metrics/users'
 
 export const name = 'exporter'
 
@@ -51,4 +52,5 @@ export function apply(ctx: Context, config: ExporterConfig) {
   dau(ctx, config, register)
   events(ctx, config, register)
   commands(ctx, config, register)
+  users(ctx, config, register)
 }
