@@ -14,6 +14,7 @@ declare module 'koishi' {
 interface DAU {
   user: number
   date: number
+  count: number
 }
 
 export const dau = (
@@ -35,7 +36,10 @@ export const dau = (
       },
       date: {
         type: 'unsigned',
-        length: 8,
+        nullable: false,
+      },
+      count: {
+        type: 'unsigned',
         nullable: false,
       },
     },
@@ -81,9 +85,10 @@ export const dau = (
         // Insert all user ids for current date
         await ctx.database.upsert(
           'exporter_dau',
-          ids.map((x) => ({
-            user: x.aid,
+          ids.map(({ aid }) => ({
+            user: aid,
             date,
+            count: 0,
           })),
         )
       }

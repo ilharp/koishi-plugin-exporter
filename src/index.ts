@@ -7,7 +7,6 @@ import {
   openMetricsContentType,
 } from 'prom-client'
 import type { Config as ExporterConfig } from './common'
-import { prefix } from './common'
 import { commands } from './metrics/commands'
 import { dau } from './metrics/dau'
 import { events } from './metrics/events'
@@ -32,7 +31,7 @@ export function apply(ctx: Context, config: ExporterConfig) {
   register.setContentType(openMetricsContentType)
 
   collectDefaultMetrics({
-    prefix,
+    // prefix,
     register,
     labels: {
       instance_name: config.name,
