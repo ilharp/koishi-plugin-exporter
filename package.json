@@ -40,6 +40,14 @@
     "locales": [
       "zh",
       "en"
-    ]
+    ],
+    "service": {
+      "required": [
+        "database"
+      ]
+    }
+  },
+  "dependencies": {
+    "prom-client": "^15.0.0"
   }
 }
