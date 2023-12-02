@@ -14,7 +14,10 @@ import { users } from './metrics/users'
 
 export const name = 'exporter'
 
-// export const using = ['database']
+export const inject = {
+  required: ['router'],
+  optional: ['database', 'monetary'],
+}
 
 export const Config: Schema<ExporterConfig> = Schema.intersect([
   Schema.object({
@@ -49,8 +52,10 @@ export function apply(ctx: Context, config: ExporterConfig) {
     }
   })
 
-  dau(ctx, config, register)
   events(ctx, config, register)
   commands(ctx, config, register)
-  users(ctx, config, register)
+  ctx.inject(['database'], (ctx) => {
+    dau(ctx, config, register)
+    users(ctx, config, register)
+  })
 }
