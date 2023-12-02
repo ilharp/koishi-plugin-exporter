@@ -3,7 +3,7 @@ import { $ } from 'koishi'
 import type { OpenMetricsContentType, Registry } from 'prom-client'
 import { Gauge } from 'prom-client'
 import type { Config } from '../common'
-import { getDate, metricNames, prefix } from '../common'
+import { getDateString, metricNames, prefix, yesterday } from '../common'
 
 declare module 'koishi' {
   interface Tables {
@@ -54,6 +54,7 @@ export const dau = (
       userId,
     }),
   )
+
   new Gauge({
     name: prefix + metricNames.dau,
     help: 'Daily active user.',
@@ -61,7 +62,8 @@ export const dau = (
     labelNames: ['instance_name'],
     async collect() {
       // Get current date
-      const date = getDate(ctx)
+      const dateString = getDateString(ctx)
+      const date = Number(dateString)
 
       // Get all items from buffer
       const items = dauBuffer.concat()
@@ -94,6 +96,33 @@ export const dau = (
       }
 
       // Get all records of current date
+      const dau = await ctx.database
+        .select('exporter_dau')
+        .where({
+          date: [date],
+        })
+        .execute((x) => $.count(x.user))
+
+      // Set DAU to length
+      this.set(
+        {
+          instance_name: config.name,
+        },
+        dau,
+      )
+    },
+  })
+
+  new Gauge({
+    name: prefix + metricNames.dau_yesterday,
+    help: 'DAU yesterday.',
+    registers: [register],
+    labelNames: ['instance_name'],
+    async collect() {
+      // Get yesterday
+      const date = Number(yesterday(getDateString(ctx)))
+
+      // Get all records of yesterday
       const dau = await ctx.database
         .select('exporter_dau')
         .where({
