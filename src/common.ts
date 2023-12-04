@@ -11,6 +11,7 @@ const metricNamesIntl = [
   'events',
   'commands',
   'users',
+  'channels',
   'dau',
   'dau_yesterday',
 ] as const

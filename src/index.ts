@@ -7,6 +7,7 @@ import {
   openMetricsContentType,
 } from 'prom-client'
 import type { Config as ExporterConfig } from './common'
+import { channels } from './metrics/channels'
 import { commands } from './metrics/commands'
 import { dau } from './metrics/dau'
 import { events } from './metrics/events'
@@ -56,5 +57,6 @@ export function apply(ctx: Context, config: ExporterConfig) {
   ctx.inject(['database'], (ctx) => {
     dau(ctx, config, register)
     users(ctx, config, register)
+    channels(ctx, config, register)
   })
 }
