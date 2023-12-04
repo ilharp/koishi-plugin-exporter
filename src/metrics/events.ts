@@ -9,7 +9,7 @@ export const events = (
   config: Config,
   register: Registry<OpenMetricsContentType>,
 ) => {
-  const e = new Counter({
+  const c = new Counter({
     name: prefix + metricNames.events,
     help: 'Events that emitted.',
     registers: [register],
@@ -17,7 +17,7 @@ export const events = (
   })
 
   ctx.on('internal/event', (event_type, event_name) => {
-    e.inc({
+    c.inc({
       instance_name: config.name,
       event_type,
       event_name,

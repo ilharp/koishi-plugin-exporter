@@ -35,7 +35,6 @@ export function apply(ctx: Context, config: ExporterConfig) {
   register.setContentType(openMetricsContentType)
 
   collectDefaultMetrics({
-    // prefix,
     register,
     labels: {
       instance_name: config.name,
