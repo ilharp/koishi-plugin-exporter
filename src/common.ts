@@ -38,6 +38,15 @@ export function getDateString(ctx: Context) {
   }${dd}`
 }
 
+export function getHour(ctx: Context) {
+  return new Date(
+    new Date().getTime() -
+      ctx.root.config['timezoneOffset'] *
+        60 /* Seconds */ *
+        1000 /* Milliseconds */,
+  ).getUTCHours()
+}
+
 export function yesterday(dateString: string) {
   const year = Number(dateString.slice(0, 4))
   const month = Number(dateString.slice(4, 6))
